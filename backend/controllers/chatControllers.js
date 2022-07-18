@@ -13,7 +13,7 @@ const accessChat = asyncHandler(async (req, res) => {
   var isChat = await Chat.find({
     isGroupChat: false,
     $and: [
-      { users: { $elemMatch: { $eq: req.user._id } } },
+      { users: { $elemMatch: { $eq: req?.user._id } } },
       { users: { $elemMatch: { $eq: userId } } },
     ],
   })
@@ -31,7 +31,7 @@ const accessChat = asyncHandler(async (req, res) => {
     var chatData = {
       chatName: "sender",
       isGroupChat: false,
-      users: [req.user._id, userId],
+      users: [req?.user._id, userId],
     };
 
     try {
@@ -48,10 +48,9 @@ const accessChat = asyncHandler(async (req, res) => {
   }
 });
 
-
 const fetchChats = asyncHandler(async (req, res) => {
   try {
-    Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
+    Chat.find({ users: { $elemMatch: { $eq: req?.user?._id } } })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
       .populate("latestMessage")
@@ -65,11 +64,9 @@ const fetchChats = asyncHandler(async (req, res) => {
       });
   } catch (error) {
     res.status(400);
-    console.log("cannot get chat!!!!!!!!!!!")
     throw new Error(error.message);
   }
 });
-
 
 const createGroupChat = asyncHandler(async (req, res) => {
   if (!req.body.users || !req.body.name) {
@@ -105,7 +102,6 @@ const createGroupChat = asyncHandler(async (req, res) => {
   }
 });
 
-
 const renameGroup = asyncHandler(async (req, res) => {
   const { chatId, chatName } = req.body;
 
@@ -123,12 +119,11 @@ const renameGroup = asyncHandler(async (req, res) => {
 
   if (!updatedChat) {
     res.status(404);
-    throw new Error("Chat Not Found"); 
+    throw new Error("Chat Not Found");
   } else {
     res.json(updatedChat);
   }
 });
-
 
 const removeFromGroup = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;
@@ -154,7 +149,6 @@ const removeFromGroup = asyncHandler(async (req, res) => {
     res.json(removed);
   }
 });
-
 
 const addToGroup = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;

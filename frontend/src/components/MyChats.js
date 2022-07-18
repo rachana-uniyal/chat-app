@@ -1,5 +1,4 @@
 import { AddIcon } from "@chakra-ui/icons";
-import React from 'react'
 import { Box, Stack, Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";

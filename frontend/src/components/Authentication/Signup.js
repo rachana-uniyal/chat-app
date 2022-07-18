@@ -1,29 +1,28 @@
-import React from 'react';
-import axios from 'axios';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { VStack } from "@chakra-ui/layout";
-import { Button } from '@chakra-ui/react';
-import { useToast } from '@chakra-ui/react';
-import { FormControl, FormLabel } from '@chakra-ui/react';
+import { Button } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
+import { FormControl, FormLabel } from "@chakra-ui/react";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 
 const Signup = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
 
-    const toast = useToast()
-    const navigate = useNavigate()
+  const handleClick = () => setShow(!show);
 
-    const handleClick = () => setShow(!show);
+  const [show, setShow] = useState(false);
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [confirmpassword, setConfirmpassword] = useState();
+  const [password, setPassword] = useState();
+  const [pic, setPic] = useState();
+  const [picLoading, setPicLoading] = useState(false);
 
-    const [show, setShow] = useState(false);
-    const [name, setName] = useState();
-    const [email, setEmail] = useState();
-    const [confirmpassword, setConfirmpassword] = useState();
-    const [password, setPassword] = useState();
-    const [pic, setPic] = useState();
-    const [picLoading, setPicLoading] = useState(false);
-
-    const submitHandler = async () => {
+  const submitHandler = async () => {
     setPicLoading(true);
     if (!name || !email || !password || !confirmpassword) {
       toast({
@@ -132,17 +131,16 @@ const Signup = () => {
     }
   };
 
-
   return (
     <VStack spacing="5px">
-        <FormControl id="first-name" isRequired>
-            <FormLabel>Name</FormLabel>
-            <Input
-                placeholder="Enter Your Name"
-                onChange={(e) => setName(e.target.value)}
-            />
-        </FormControl>
-        <FormControl id="email" isRequired>
+      <FormControl id="first-name" isRequired>
+        <FormLabel>Name</FormLabel>
+        <Input
+          placeholder="Enter Your Name"
+          onChange={(e) => setName(e.target.value)}
+        />
+      </FormControl>
+      <FormControl id="email" isRequired>
         <FormLabel>Email Address</FormLabel>
         <Input
           type="email"
@@ -199,7 +197,7 @@ const Signup = () => {
         Sign Up
       </Button>
     </VStack>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;
